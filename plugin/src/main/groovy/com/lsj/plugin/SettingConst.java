@@ -1,3 +1,5 @@
+package com.lsj.plugin;
+
 /**
  * @author shijun_lin
  * @date 2019/10/24
