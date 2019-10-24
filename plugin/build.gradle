@@ -1,0 +1,24 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+def black_sheep_version = "1.0.0"
+
+dependencies {
+    implementation gradleApi()   //gradle sdk
+    implementation localGroovy() //groovy sdk
+    implementation 'com.android.tools.build:gradle:3.5.1'
+
+}
+repositories {
+    jcenter()
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: uri('../repo'))
+        pom.groupId = 'me.lsj'
+        pom.artifactId = 'black_sheep_plugin'
+        pom.version = "$black_sheep_version"
+    }
+}
+

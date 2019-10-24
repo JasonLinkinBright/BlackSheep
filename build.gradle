@@ -1,0 +1,36 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        // 添加本地仓库目录
+        maven {
+            url uri('./repo')
+        }
+        
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.1'
+        
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+        // 导入 blacksheep 插件依赖
+        classpath 'me.lsj:black_sheep_plugin:1.0.0'
+    }
+}
+
+allprojects {
+    repositories {
+        maven {
+            url uri('./repo')
+        }
+        google()
+        jcenter()
+
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
