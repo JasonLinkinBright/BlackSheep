@@ -4,7 +4,7 @@ import com.android.build.gradle.AppExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-public class BlackSheepPlugin implements Plugin<Project>{
+public class BlackSheepPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
@@ -13,6 +13,6 @@ public class BlackSheepPlugin implements Plugin<Project>{
         System.out.println("========================");
 
         AppExtension appExtension = project.getProperties().get("android");
-        appExtension.registerTransform(new BlackSheepPlugin(project), Collections.EMPTY_LIST);
+        appExtension.registerTransform(new AutoTimeMonitorTransform(), Collections.EMPTY_LIST);
     }
 }
