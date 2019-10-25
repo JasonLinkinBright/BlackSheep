@@ -32,19 +32,21 @@ public class AutoTimeMonitorTransform extends Transform {
         return SettingConst.TRANSFORM_NAME;
     }
 
+    // 指定输入的类型，通过这里的设定，可以指定我们要处理的文件类型
+    // 这样确保其他类型的文件不会传入
     @Override
     public Set<QualifiedContent.ContentType> getInputTypes() {
         return TransformManager.CONTENT_CLASS;
     }
-
+    // 指定Transform的作用范围
     @Override
     public Set<? super QualifiedContent.Scope> getScopes() {
-        return TransformManager.SCOPE_FULL_PROJECT;
+        return TransformManager.SCOPE_FULL_PROJECT
     }
 
     @Override
     public boolean isIncremental() {
-        return false;
+        return false
     }
 
     @Override
@@ -80,19 +82,15 @@ public class AutoTimeMonitorTransform extends Transform {
             //列出目录所有文件（包含子文件夹，子文件夹内文件）
             input.file.eachFileRecurse { File file ->
                 String name = file.name
-                //需要插桩class 根据自己的需求来
-                if (name.endsWith(".class") && !name.startsWith("R\$") &&
-                        !"R.class".equals(name) && !"BuildConfig.class".equals(name)) {
-
-                    println name + ' is changing...'
-
+                //需要插桩class 根据自己的需求来------------- 这里判断是否是我们自己写的Application
+                if ("MainActivity.class".equals(name)) {
+                    println("==== begin changing MainAcitivity.class")
                     ClassReader classReader = new ClassReader(file.bytes)
                     //传入COMPUTE_MAXS  ASM会自动计算本地变量表和操作数栈
                     ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
-                    //创建类访问器，这里我们定义的 com.lsj.plugin.TimeClassVisitor  并交给它去处理
+                    //创建类访问器   并交给它去处理
                     ClassVisitor classVisitor = new TimeClassVisitor(classWriter)
                     classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)
-
                     byte[] code = classWriter.toByteArray()
                     FileOutputStream fos = new FileOutputStream(file.parentFile.absolutePath + File.separator + name)
                     fos.write(code)
@@ -104,7 +102,6 @@ public class AutoTimeMonitorTransform extends Transform {
         def dest = outputProvider.getContentLocation(input.name, input.contentTypes, input.scopes, Format.DIRECTORY)
         FileUtils.copyDirectory(input.file, dest)
     }
-
     //遍历jarInputs 得到对应的class 交给ASM处理
     private static void handJarInput(JarInput jarInput, TransformOutputProvider outputProvider) {
         if (jarInput.file.getAbsolutePath().endsWith(".jar")) {
@@ -129,8 +126,7 @@ public class AutoTimeMonitorTransform extends Transform {
                 ZipEntry zipEntry = new ZipEntry(entryName)
                 InputStream inputStream = jarFile.getInputStream(jarEntry)
                 //需要插桩class 根据自己的需求来-------------
-                if (entryName.endsWith(".class") && !entryName.startsWith("R\$") &&
-                        !"R.class".equals(entryName) && !"BuildConfig.class".equals(entryName)) {
+                if ("androidx/fragment/app/FragmentActivity.class".equals(entryName)) {
                     //class文件处理
                     println '----------- jar class  <' + entryName + '> -----------'
                     jarOutputStream.putNextEntry(zipEntry)

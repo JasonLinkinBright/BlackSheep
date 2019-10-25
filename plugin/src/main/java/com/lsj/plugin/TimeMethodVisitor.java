@@ -13,16 +13,19 @@ public class TimeMethodVisitor extends MethodVisitor {
         super(Opcodes.ASM5, mv);
     }
 
+    //开始访问方法
     @Override
     public void visitCode() {
-        //方法体内开始时调用
         super.visitCode();
+
         mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/System", "currentTimeMillis", "()J", false);
         mv.visitVarInsn(Opcodes.LSTORE, 1);
     }
+
     @Override
     public void visitInsn(int opcode) {
-        //每执行一个指令都会调用
+        //判断内部操作指令
+        //当前指令是RETURN，表示方法内部的代码已经执行完
         if (opcode == Opcodes.RETURN) {
             mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/System", "currentTimeMillis", "()J", false);
             mv.visitVarInsn(Opcodes.LLOAD, 1);
@@ -44,6 +47,12 @@ public class TimeMethodVisitor extends MethodVisitor {
             mv.visitInsn(Opcodes.POP);
         }
         super.visitInsn(opcode);
+    }
+
+    @Override
+    public void visitEnd() {
+        super.visitEnd();
+        //访问结束
     }
 
 
