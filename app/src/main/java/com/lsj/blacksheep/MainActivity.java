@@ -2,6 +2,7 @@ package com.lsj.blacksheep;
 
 import android.os.Bundle;
 
+import com.lsj.plugin.TimeCost;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     @Override
+    @TimeCost
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

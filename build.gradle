@@ -16,7 +16,7 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         // 导入 blacksheep 插件依赖
-//        classpath  'me.lsj:black_sheep_plugin:1.0.0'
+        classpath  'me.lsj:black_sheep_plugin:1.0.0'
     }
 }
 
