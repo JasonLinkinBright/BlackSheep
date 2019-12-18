@@ -28,7 +28,7 @@ public class TimeClassVisitor extends ClassVisitor {
             if ("onCreate".equals(name)) {
                 //处理onCreate
                 System.out.println("TimeClassVisitor : visitMethod method ----> " + name);
-                return new TimeMethodVisitor(mv);
+                return new TimeMethodVisitor(mv,name);
             }
         }
         return mv;

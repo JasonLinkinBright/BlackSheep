@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 // 在编译时期，应用 Blacksheep 插件
-apply plugin: 'me.lsj.blacksheep.plugin'
+//apply plugin: 'me.lsj.blacksheep.plugin'
 
 android {
     compileSdkVersion 29
