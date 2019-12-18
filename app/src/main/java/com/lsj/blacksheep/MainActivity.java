@@ -56,6 +56,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testTime(){
-        Log.e("lllsjj","");
+        Log.e("lllsjj","dds");
     }
 }
